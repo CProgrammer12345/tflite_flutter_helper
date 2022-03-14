@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:imageclassification/classifier.dart';
 import 'package:imageclassification/classifier_quant.dart';
+import 'package:imageclassification/model_selection_page.dart';
 import 'package:logger/logger.dart';
+import 'package:download_assets/download_assets.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 void main() => runApp(MyApp());
@@ -14,10 +16,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Image Classification',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ModelSelectionPage(),
     );
   }
 }
@@ -81,16 +84,16 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: <Widget>[
           Center(
-            child: _image == null
-                ? Text('No image selected.')
-                : Container(
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height / 2),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                    ),
-                    child: _imageWidget,
-                  ),
+            // child: _image == null
+            //     ? Text('No image selected.')
+            //     : Container(
+            //         constraints: BoxConstraints(
+            //             maxHeight: MediaQuery.of(context).size.height / 2),
+            //         decoration: BoxDecoration(
+            //           border: Border.all(),
+            //         ),
+            //         child: _imageWidget,
+            //       ),
           ),
           SizedBox(
             height: 36,

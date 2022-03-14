@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'localdb.dart';
 import 'package:image/image.dart';
 import 'package:collection/collection.dart';
 import 'package:logger/logger.dart';
@@ -21,7 +21,7 @@ abstract class Classifier {
   late TfLiteType _inputType;
   late TfLiteType _outputType;
 
-  final String _labelsFileName = 'assets/labels.txt';
+  final String _labelsFileName = 'assets/finallabels.txt';
 
   final int _labelsLength = 1001;
 
@@ -48,7 +48,7 @@ abstract class Classifier {
   Future<void> loadModel() async {
     try {
       interpreter =
-          await Interpreter.fromAsset(modelName, options: _interpreterOptions);
+          await Interpreter.fromFile(LocalDB.modelFile, options: _interpreterOptions);
       print('Interpreter Created Successfully');
 
       _inputShape = interpreter.getInputTensor(0).shape;
@@ -65,7 +65,10 @@ abstract class Classifier {
   }
 
   Future<void> loadLabels() async {
-    labels = await FileUtil.loadLabels(_labelsFileName);
+
+    labels = await FileUtil.loadLabelsFromFile(LocalDB.labelFile);
+    print(labels.length);
+    print(_labelsLength);
     if (labels.length == _labelsLength) {
       print('Labels loaded successfully');
     } else {
